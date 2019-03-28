@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[space]{xeCJK}
+\usepackage[fontset=ubuntu]{ctex}
+\usepackage{geometry}   %设置页边距的宏包
+\usepackage{titlesec}   %设置页眉页脚的宏包
+
+\geometry{left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm} 
+
+\title{基于VR简笔画的模型检索\\\ \\ 开题报告}
+\author{
+罗宇辰 516030910101  \\\
+陈志扬 516030910347  \\\
+陈  诺 516030910199 
+}
+\date{2019年3月23日}
+
+\clearpage
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\clearpage
+
+\begin{abstract}
+模型检索是根据输入图片、几何描述等信息，在已有的模型数据库中匹配找到相似模型的技术。该技术在数据分析、工业制造等领域都有广泛的应用。本项目希望结合VR交互的特点，根据用户的简笔画输入，进行3D模型检索，实现VR中新的交互形式。
+\end{abstract}
+
+\section{应用背景}
+
+\section{用户分析}
+
+\section{设计方案}
+
+\section{创新点}
+\subsection{类似的其他产品}
+\subsubsection{3DESS}
+\paragraph{
+用来查找计算机零件的一个3D模型搜索引擎
+}
+\subsubsection{Google tilt brush}
+\paragraph{
+一个VR交互平台下的绘画工具
+}
+
+\section{可能的技术方案}
+\subsection{常见的3D模型检索方法}
+\begin{itemize}
+    \item Derive a high level description (e.g.: a skeleton) and then find matching results
+    \item Compute a feature vector based on statistics
+    \item 2D projection method
+\end{itemize}
+\subsubsection{High level description}
+This method describes 3D models by using a skeleton. The skeleton encodes the geometric and topological information in the form of a skeletal graph and uses graph matching techniques to match the skeletons and compare them. However, this method requires a 2-manifold input model, and it is very sensitive to noise and details. Many of the existing 3D models are created for visualization purposes, while missing the input quality standard for the skeleton method. The skeleton 3D retrieval method needs more time and effort before it can be used widely.
+\subsubsection{Feature vector}
+Unlike Skeleton modeling, which requires a high quality standard for the input source, statistical methods do not put restriction on the validity of an input source. Shape histograms, feature vectors composed of global geo-metic properties such as circularity and eccentricity, and feature vectors created using frequency decomposition of spherical functions are common examples of using statistical methods to describe 3D information.
+\subsubsection{2D projection}
+Some approaches use 2D projections of a 3D model, justified by the assumption that if two objects are similar in 3D, then they should have similar 2D projections in many directions. Prototypical Views and Light field description are good examples of 2D projection methods.
+
+\subsection{可能使用到的技术}
+\begin{itemize}
+    \item 数据清洗
+    \item 特征匹配
+    \item 神经网络（不建议，可扩展性不好）
+\end{itemize}
+\subsection{已经测试的技术方法}
+
+\section{项目工作计划及分工}
+\subsection{分工}
+\paragraph{VR交互模块：1人。 \\\ 模型检索模块：2人。
+}
+
+\section{参考}
+\begin{itemize}
+    \item Sundar, H., Silver, D., Gagvani, N., Dickinson, S., Skeleton based shape matching and retrieval, In: Proc. SMI, Seoul, Korea (2003)
+    \item Min, P., Kazhdan, M., Funkhouser, T., A comparison of text and shape matching for retrieval of Online 3D models. Research And Advanced Technology For Digital Libraries, 2004, Vol.3232, pp.209-220
+\end{itemize}
+
+\end{document}
