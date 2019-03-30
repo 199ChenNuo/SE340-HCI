@@ -30,50 +30,118 @@
 \end{abstract}
 
 \section{应用背景}
-近年来，随着计算机辅助设计、计算机辅助学习的逐渐普及，VR设备的逐渐普及，三维动画和三维游 戏的流行，互联网上的三维模型数量急剧增长。然而，三维模型具有的拓扑信息、空间结构难以用文字表达出来。检索三维模型成为了一个较为重要的问题。  
 
-目前已有的一些技术，例如基于文字描述的模型检索、基于二维草图的模型检索、基于内容的模型检索等都有各自的缺点，不能够满足一些特定的使用场景，因此我们希望能够通过基于VR简笔画的模型检索方法来填补前面几种检索方法中不足之处，优化特定场景下的模型检索，提升用户体验。
+基于安全、经济等方面的考虑，有时会让学生在VR下学习做实验。各种实验的实验器具具有高度重复性（烧杯、刻度尺、酒精灯……），但是数量却不具有确定性。为每一个实验事先设定好实验器具又是一个不经济且死板的做法。因此在VR环境下，为学生提供一个快速的模型检索方法来查找常用的实验器具是有意义的。
+
+目前已有的一些技术，例如基于文字描述的模型检索、基于二维草图的模型检索、基于内容的模型检索等都有各自的缺点，不能够满足上文提到的特定使用场景，因此我们希望能够通过实现基于VR简笔画的模型检索方法来填补前面几种检索方法中不足之处，优化特定场景下的模型检索，提升用户体验。  
+
 
 \section{用户分析}
-\begin{itemize}
-    \item 学生  
-    基于安全、经济等方面的考虑，有时会让学生在VR下学习做实验。各种实验的实验器具具有高度重复性（烧杯、刻度尺、酒精灯……），但是数量却不具有确定性。为每一个实验事先设定好实验器具又是一个不经济且死板的做法。因此在VR环境下，为学生提供一个快速的模型检索方法来查找常用的实验器具是有意义的。
-    \item 设计人员
-    
-\end{itemize}
 
+\subsection{目标用户群体}
+    在VR中做实验的学生
+\subsection{用户群体的特质}
+\begin{enumerate}
+    \item 对VR操作不熟悉，没有尝试过在VR下作画
+    \item 绘画水平参差不齐
+    \item 对模型具有不同的理解，画简笔画时对模型特点的描述侧重点不尽相同
+    \item 实验时间宝贵，希望能够快速找到模型
+\end{enumerate}
+
+\subsection{目标群体的需求}
+\begin{enumerate}
+    \item VR交互简单易懂，并且最好提供新手指导等提示信息
+    \item 能够处理不同绘画水平的学生的简笔画
+    \item 能够找出简笔画中的关键语义信息并查找出对应的模型
+    \item 模型检索尽量高效，减少学生的等待时间
+\end{enumerate}
 
 \section{设计方案}
-基于用户画出的VR简笔画来检索模型，是较为友好的一种交互方式。通过处理用户画出的VR简笔画得到的信息来匹配数据库中的三维模型并将
+\subsection{设计简述}
+基于用户画出的VR简笔画来检索模型，是较为友好的一种交互方式。通过处理用户画出的VR简笔画得到的二维信息，并通过二维信息来匹配数据库中的三维模型，从而达到模型检索的目的。  
+
+\subsection{VR交互部分}
+VR交互部分可以借鉴google tile brush，为用户提供一个交互便捷的作画系统。该系统需要帮助用户快速完成简笔画，并且将得到的用户数据传输到模型检索模块。
+
+\subsubsection{模型检索部分}
+模型检索部分粗略的分为两块：
+\begin{enumerate}
+    \item VR简笔画处理部分
+    \item 模型检索部分
+\end{enumerate}
+
+\subsubsection{VR简笔画处理部分}
+这部分需要完成的工作为将VR简笔画转换为包含了模型特征的二维图像。 
+通过用户视点将VR简笔画投影到二维空间，再通过计算机视觉的方法尽量提取出投影中的有效信息。
+
+\subsubsection{模型检索部分}
+这部分需要完成的工作为通过二维图像在数据库中检索相似度较高的模型，并返回给VR端。
+
 
 \section{创新点}
-\subsection{类似的其他产品}
-\subsubsection{3DESS}
-\paragraph{
-用来查找计算机零件的一个3D模型搜索引擎
-}
-\subsubsection{Google tilt brush}
-\paragraph{
-一个VR交互平台下的绘画工具
-}
+\subsection{基于VR端输入的模型检索}
+尽管基于内容的模型检索已经提出很久了，搜索引擎公司也推出了使用图片来搜索图片等基于内容的模型检索，但是使用VR输入来检索模型并没有流行，也没有出现较为流行的基于VR输入的模型检索。  
+
+目前的三维模型检索大多数是基于文字关键词或者二维图像来进行的。然而关键字具有二义性，用户不能很好的借助文字来准确快速的查找到三维模型，同时在VR环境下输入文字也是较为费力的。基于二维图像的检索也同样不适用与VR交互场景，因此我们希望能够直接利用VR简笔画来提取关键信息从而完成模型检索。
+
+\subsection{VR简笔画的特征提取}
+目前有的特征提取大多是基于二维图像来进行的。而我们希望能够从VR简笔画中提取出特征信息。尽管操作方式是从VR简笔画数据到二维图像再到特征，但是如何将VR数据转换为二维图像是一个需要探索尝试的领域，这也是本项目的一个创新点。  
+
 
 \section{可能的技术方案}
-\subsection{常见的3D模型检索方法}
-\begin{itemize}
-    \item Derive a high level description (e.g.: a skeleton) and then find matching results
-    \item Compute a feature vector based on statistics
-    \item 2D projection method
-\end{itemize}
-\subsubsection{High level description}
-This method describes 3D models by using a skeleton. The skeleton encodes the geometric and topological information in the form of a skeletal graph and uses graph matching techniques to match the skeletons and compare them. However, this method requires a 2-manifold input model, and it is very sensitive to noise and details. Many of the existing 3D models are created for visualization purposes, while missing the input quality standard for the skeleton method. The skeleton 3D retrieval method needs more time and effort before it can be used widely.
-\subsubsection{Feature vector}
-Unlike Skeleton modeling, which requires a high quality standard for the input source, statistical methods do not put restriction on the validity of an input source. Shape histograms, feature vectors composed of global geo-metic properties such as circularity and eccentricity, and feature vectors created using frequency decomposition of spherical functions are common examples of using statistical methods to describe 3D information.
-\subsubsection{2D projection}
-Some approaches use 2D projections of a 3D model, justified by the assumption that if two objects are similar in 3D, then they should have similar 2D projections in many directions. Prototypical Views and Light field description are good examples of 2D projection methods.
 
+现行的三维模型检索机制，总体来说分为2大类：以三维模型为中心的方法及以三维模型视图为中心的方法。
+
+其中，以三维模型为中心的方法在复杂模型检索领域很难应用，这主要是因为复杂模型几何元素的海量数据，使得计算机处理速度变慢，难以满足实时模型检索的要求。故针对复杂模型检索，应用基于三维模型视图的检索方法相对可行，因为三维模型几何造型的复杂度如何，其各个不同角度的视图信息占用较少的字节数，这对于大规模三维模型数据库检索系统是必要的。
+
+考虑到我们是通过VR设备获取模型的检索信息，由于用户绘制的3D图像不一定是一个封闭的图形，并且不一定与用户想获取的模型有较高的外形相似性，我们选择使用2D的信息来进行模型检索。
+
+
+\subsection{基于2D草图的3D模型检索方法}
+我们探究了几个基于2D草图的3D模型检索技术，主要可以分为3种类别：
+\begin{itemize}
+    \item 基于部件分割的方法
+    \item 基于形状特征的方法
+    \item 基于多特征反馈的方法
+\end{itemize}
+\subsubsection{基于手绘草图部件分割的方法}
+该方法包括：
+\begin{itemize}
+    \item 预处理模块。用于对手绘查询草图进行去噪处理获得灰度图，并对所述灰度图进行二值化处理、边界扩展处理、图像孔洞填充处理，获得处理后的图像
+    \item 部件标记模块。用于对处理后的图像进行等间隔采样，并对采样点添加部件标签
+    \item 采样点特征提取模块。用于提取采样点的各种特征向量；部件分割模块，用于根据添加部件标签后的采样点的各种特征向量进行分割模型训练
+    \item 相似度计算与总评分排序模块，用于进行部件局部相似度计算，按照总评分进行排序，并将排序结果返回
+\end{itemize}
+
+这种方法综合利用了手绘草图部件的几何信息、部件间的拓扑结构信息以及整幅视图的全局信息，并设置了三视图动态赋权的机制，放大重要视角在总评分中的影响，从而使得基于手绘草图的三维模型检索更加精准有效
+\subsubsection{基于形状特征的方法}
+这类方法基本流程都是相似的：
+\begin{enumerate}
+    \item 生成3D模型在不同视角下的二维轮廓线图。
+    \item 对二维轮廓线图进行特征提取，获得特征描述符，构建特征数据库
+    \item 对输入的二位草图进行类似的特征提取，然后使用匹配算法计算与特征数据库中的特征的相似距离，输出相似性较高的模型
+\end{enumerate}
+   
+这类方法的不同之处主要在于模型的二维轮廓的提取方法的不同，使用的特征描述符的不同和特征匹配算法的不同
+
+此类方法着力于形状和轮廓特征的提取和匹配，捕捉到了最核心的检索信息，总体上所需要处理的信息量相对较少，因此模型检索的效率较高
+\subsubsection{基于多特征反馈的方法}
+此方法的基本流程为：
+\begin{enumerate}
+    \item 对三维模型数据库中的每个三维模型进行处理，获取三维模型的彩色视图阵列
+    \item 获取三维模型特征，合并所有三维模型特征生成特征数据库
+    \item 计算客户端提供的二维草图的特征
+    \item 计算该二维草图与每个三维模型的距离，并和特征数据库中特征进行匹配，对所有三维模型按照距离值排序并输出，生成检索结果
+    \item 由客户端对每次检索结果进行“相关”及“不相关”的标注，将标注后的三维模型信息返回服务器端，服务器端对该信息进行学习，采取多SVM融合方法对所述三维模型库进行分类，根据分类结果对所有三维模型进行排序并输出，作为检索结果
+    \item 重复步骤5，最终输出用户满意的三维模型检索结果。
+\end{enumerate}
+
+这种方法的有两个特殊之处：一是结合了多种特征，保证了信息获取的完整性及可靠性，提高了复杂三维模型检索精度；二是利用用户的反馈信息来训练特征匹配网络，不断提高匹配的能力和速度
 \subsection{可能使用到的技术}
 \begin{itemize}
     \item 数据清洗
+    \item 图像分割
+    \item 特征提取
     \item 特征匹配
     \item 神经网络（不建议，可扩展性不好）
 \end{itemize}
