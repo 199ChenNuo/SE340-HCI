@@ -4,8 +4,8 @@ import cv2 as cv
 import numpy as np
 from FourierDescriptor import getFourierDescriptor
 
-MIN_DESCRIPTOR = 100  # surprisingly enough, 2 descriptors are already enough
-TRAINING_SIZE = 100
+MIN_DESCRIPTOR = 120  # surprisingly enough, 2 descriptors are already enough
+TRAINING_SIZE = 1000
 RESOLUTION = 512
 MODEL_NUM = 20
 
@@ -22,7 +22,7 @@ def sample_generater(descriptors):
     """this function generates training_set, also for testing"""
     response = np.arange(MODEL_NUM)
     response = np.tile(response, TRAINING_SIZE / MODEL_NUM)
-    #response = response.astype(np.float32)
+  
     training_set = np.empty(
         [TRAINING_SIZE, MIN_DESCRIPTOR], dtype=np.float32)
     # assign descriptors with noise to our training_set
@@ -37,7 +37,6 @@ def sample_generater(descriptors):
 
 """SVM START"""
 def SVM(training_set, response, test_set, answer):
-    # Training
     svm_model = cv.ml.SVM_create()
     # set up parameters for SVM
     svm_model.setKernel(cv.ml.SVM_LINEAR)
@@ -45,8 +44,7 @@ def SVM(training_set, response, test_set, answer):
     svm_model.setC(2.67)
     svm_model.setGamma(5.383)
     svm_model.train(training_set, cv.ml.ROW_SAMPLE, response)
-    # To my surprise SVM training is already perfect with 2 descriptors
-    # answer_SVM = [svm_model.predict(np.float32(s)) for s in test_set]
+
     answer_SVM = svm_model.predict(test_set)
     answer_SVM = np.array(answer_SVM)[1]
     #print answer_SVM
@@ -74,7 +72,7 @@ if __name__ == "__main__":
     descriptors = []
     # import images and treat
     for idx in range(MODEL_NUM):
-        imgname = '../render_output/m%d_0_512x512.png'%idx  #更改为图片所在位置
+        imgname = '../render_output/m%d_0_512x512.png'%idx
         print "processing m%d_0_512x512.png ... "%idx
         img = cv.imread(imgname)       
 

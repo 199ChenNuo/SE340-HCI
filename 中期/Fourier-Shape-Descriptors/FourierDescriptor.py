@@ -3,21 +3,6 @@
 import cv2 as cv
 import numpy as np
 
-def reconstruct_contour(contour, resolution):
-    contour_reconstruct  = contour.copy()
-    
-    # make positive
-    if contour_reconstruct.min() < 0:
-        contour_reconstruct -= contour_reconstruct.min()
-
-    # normalization
-    contour_reconstruct *= resolution / contour_reconstruct.max()
-
-    # type cast to int32
-    contour_reconstruct = contour_reconstruct.astype(np.int32, copy=False)
-    
-    return contour_reconstruct
-
 def findDescriptor(img, resolution):
     """ findDescriptor(img) finds and returns the
     Fourier-Descriptor of the image contour"""
@@ -50,13 +35,10 @@ def truncate_descriptor(descriptors, degree):
     """this function truncates an unshifted fourier descriptor array
     and returns one also unshifted"""
     descriptors = np.fft.fftshift(descriptors)
-    #draw_descriptors(descriptors, 512, "after fftshift")
     center_index = len(descriptors) / 2
     descriptors = descriptors[
         center_index - degree / 2:center_index + degree / 2]
-    #draw_descriptors(descriptors, 512, "after sample")
     descriptors = np.fft.ifftshift(descriptors)
-    #draw_descriptors(descriptors, 512, "after ifftshift")
 
     return descriptors
 
