@@ -11,7 +11,7 @@
 | lid 酒精灯盖子                                      | 6        |
 | match 火柴                                          | 7        |
 | matchBox 火柴盒                                     | 8        |
-| multipoly 共聚物？                                  | 9        |
+| multipoly 棉花？                                    | 9        |
 | newPipe 导管                                        | 10       |
 | powder 粉                                           | 11       |
 | pressureBeaker 压力烧杯                             | 12       |

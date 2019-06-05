@@ -3,36 +3,41 @@
 import cv2 as cv
 import numpy as np
 
-def findContour(img):
-    # convert to gray image
-    imgray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)    
-    # cv.imshow("gray", imgray)
-    # cv.waitKey(-1)
+from contour import findContour
 
-    # edges
-    edges = cv.Canny(imgray, 30, 40)
-    # cv.imshow("edges", edges)
-    # cv.waitKey(-1)
+# def findContour(img):
+#     # convert to gray image
+#     imgray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)    
+#     # cv.imshow("gray", imgray)
+#     # cv.waitKey(-1)
+    
 
-    # threshold
-    ret, thresh = cv.threshold(edges, 1, 255, 0)
-    # cv.imshow("thresh", thresh)
-    # cv.waitKey(-1)
+#     # edges
+#     edges = cv.Canny(imgray, 30, 40)
+#     # cv.imshow("edges", edges)
+#     # cv.waitKey(-1)
 
-    # dilation    
-    kernel = np.ones((5,5),np.uint8)  
-    dilation = cv.dilate(thresh,kernel,iterations = 1)
-    # cv.imshow("dila", dilation)
-    # cv.waitKey(-1)
+#     # threshold
+#     ret, thresh = cv.threshold(edges, 1, 255, 0)
+#     # cv.imshow("thresh", thresh)
+#     # cv.waitKey(-1)
 
-    # detect contours
-    contour, hierarchy = cv.findContours(
-        dilation,
-        cv.RETR_EXTERNAL,
-        cv.CHAIN_APPROX_NONE)
+#     # dilation    
+#     kernel = np.ones((9,9),np.uint8)  
+#     dilation = cv.dilate(thresh,kernel,iterations = 1)
+#     # cv.imshow("dila", dilation)
+#     # cv.waitKey(-1)
 
-    #print contour[0].shape
-    return contour[0]
+#     # detect contours
+#     contour, hierarchy = cv.findContours(
+#         dilation,
+#         cv.RETR_EXTERNAL,
+#         cv.CHAIN_APPROX_NONE)
+
+#     for c in contour:
+#         print c.shape
+#     # print contour.shape
+#     return contour[0]
 
 def findDescriptor(img):
     """ findDescriptor(img) finds and returns the
